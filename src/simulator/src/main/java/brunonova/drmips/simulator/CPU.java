@@ -757,6 +757,7 @@ public class CPU {
 		regbank.reset();
 		if(hasDataMemory()) dataMemory.reset();
 		if(hasALU() && alu instanceof ExtendedALU) ((ExtendedALU)alu).reset();
+		resetToFirstCycle();
 	}
 
 	/**
