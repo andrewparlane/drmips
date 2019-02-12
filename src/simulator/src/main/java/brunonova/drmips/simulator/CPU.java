@@ -64,7 +64,7 @@ public class CPU {
 	/** The exponent (e), that multiplied by 10 and the latency gives the real latency in seconds (ps * 10 ^ e). */
 	public static final int LATENCY_EXPONENT = -12;
 	/** The number of clock cycles executed in <tt>executeAll()</tt> after which it throws an exception. */
-	public static final int EXECUTE_ALL_LIMIT_CYCLES = 10000;
+	public static final int EXECUTE_ALL_LIMIT_CYCLES = 80000;
 
 	/** The file of the CPU. */
 	private File file = null;
