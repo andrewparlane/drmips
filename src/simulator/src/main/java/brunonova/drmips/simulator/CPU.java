@@ -104,6 +104,8 @@ public class CPU {
 	private PipelineRegister exMemReg = null;
 	/** The MEM/WB register, if the CPU is pipelined. */
 	private PipelineRegister memWbReg = null;
+	/** The component that outputs the PredictWrong signal. */
+	private Component predictWrongComponent = null;
 
 	/** Clock period in LATENCY_UNIT unit. */
 	private int clockPeriod;
@@ -117,6 +119,10 @@ public class CPU {
 	private int forwards = 0;
 	/** Number of stalls. */
 	private int stalls = 0;
+	/** Number of branches. */
+	private int branches = 0;
+	/** Number of branches predicted incorrectly. */
+	private int predictWrong = 0;
 	/** Whether the latencies and critical path should depend on the current instruction. */
 	private boolean performanceInstructionDependent = false;
 	/** Breakpoint addr . */
@@ -425,6 +431,22 @@ public class CPU {
 	}
 
 	/**
+	 * Returns the number of branches.
+	 * @return Number of branches.
+	 */
+	public int getNumberOfBranches() {
+		return branches;
+	}
+
+	/**
+	 * Returns the number of branches predicted wrong.
+	 * @return Number of branches predicted wrong.
+	 */
+	public int getNumberOfBranchesPredictedWrong() {
+		return predictWrong;
+	}
+
+	/**
 	 * Returns whether the latencies and critical path depend on the current instruction.
 	 * @return <tt>true</tt> if the performance depends on the current instruction.
 	 */
@@ -440,6 +462,8 @@ public class CPU {
 		executedInstructions = 0;
 		forwards = 0;
 		stalls = 0;
+		branches = 0;
+		predictWrong = 0;
 	}
 
 	/**
@@ -645,6 +669,18 @@ public class CPU {
 		if(hasHazardDetectionUnit() && getHazardDetectionUnit().getStall().getValue() != 0)
 			stalls++;
 
+		if(isPipeline() && (exMemReg.getOutput("Branch").getValue() == 1)) {
+			// There's a branch in
+			branches++;
+
+			if (predictWrongComponent == null) {
+				predictWrong++;
+			}
+			else if (predictWrongComponent.getOutput("PredictWrong").getValue() == 1) {
+				predictWrong++;
+			}
+		}
+
 		saveCycleState();
 		for(Component c: synchronousComponents) // execute synchronous actions without propagating output changes
 			((Synchronous)c).executeSynchronous();
@@ -725,6 +761,18 @@ public class CPU {
 			}
 			if(hasHazardDetectionUnit() && getHazardDetectionUnit().getStall().getValue() != 0)
 				stalls--;
+
+			if(isPipeline() && (exMemReg.getOutput("Branch").getValue() == 1)) {
+				// There's a branch in
+				branches--;
+
+				if (predictWrongComponent == null) {
+					predictWrong--;
+				}
+				else if (predictWrongComponent.getOutput("PredictWrong").getValue() == 1) {
+					predictWrong--;
+				}
+			}
 
 			calculateInstructionPerformance(); // Refresh critical path
 		}
@@ -849,6 +897,8 @@ public class CPU {
 		components.put(component.getId(), component);
 		if(component instanceof Synchronous)
 			synchronousComponents.add(component);
+
+		String id = component.getId().trim().toUpperCase();
 		if(component instanceof PC) {
 			if(pc != null) throw new InvalidCPUException("Only one program counter allowed!");
 			pc = (PC)component;
@@ -886,7 +936,6 @@ public class CPU {
 			hazardDetectionUnit = (HazardDetectionUnit)component;
 		}
 		else if(component instanceof PipelineRegister) {
-			String id = component.getId().trim().toUpperCase();
 			switch (id) {
 				case "IF/ID":
 					if(ifIdReg != null) throw new InvalidCPUException("Only one IF/ID pipeline register allowed!");
@@ -907,6 +956,11 @@ public class CPU {
 				default:
 					throw new InvalidCPUException("A pipeline register's identifier must be one of {IF/ID, ID/EX, EX/MEM, MEM/WB}!");
 			}
+		}
+		else if (id.equals("ANDBRANCH") ||
+		         id.equals("XORPREDICTWRONG"))
+		{
+			predictWrongComponent = component;
 		}
 	}
 

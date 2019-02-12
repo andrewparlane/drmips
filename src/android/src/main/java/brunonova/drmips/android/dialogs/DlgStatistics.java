@@ -62,6 +62,8 @@ public class DlgStatistics extends DialogFragment implements DialogInterface.OnC
 		((TextView)layout.findViewById(R.id.lblCPIVal)).setText(cpu.getCPIAsString());
 		((TextView)layout.findViewById(R.id.lblForwardsVal)).setText(cpu.getNumberOfForwards() + "");
 		((TextView)layout.findViewById(R.id.lblStallsVal)).setText(cpu.getNumberOfStalls() + "");
+		((TextView)layout.findViewById(R.id.lblBranchesVal)).setText(cpu.getNumberOfBranches() + "");
+		((TextView)layout.findViewById(R.id.lblPWVal)).setText(cpu.getNumberOfBranchesPredictedWrong() + "");
 
 		return new AlertDialog.Builder(getActivity())
 			.setTitle(R.string.statistics)

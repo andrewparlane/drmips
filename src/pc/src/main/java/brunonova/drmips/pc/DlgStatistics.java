@@ -64,6 +64,10 @@ public class DlgStatistics extends javax.swing.JDialog {
         lblForwardsVal = new javax.swing.JLabel();
         lblStalls = new javax.swing.JLabel();
         lblStallsVal = new javax.swing.JLabel();
+        lblBranches = new javax.swing.JLabel();
+        lblBranchesVal = new javax.swing.JLabel();
+        lblBranchesPW = new javax.swing.JLabel();
+        lblBranchesPWVal = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         cmdClose = new javax.swing.JButton();
 
@@ -115,6 +119,16 @@ public class DlgStatistics extends javax.swing.JDialog {
         lblStallsVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblStallsVal.setText("0");
 
+        lblBranches.setText("branches:");
+
+        lblBranchesVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblBranchesVal.setText("0");
+
+        lblBranchesPW.setText("branches predicted wrong:");
+
+        lblBranchesPWVal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblBranchesPWVal.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -122,6 +136,8 @@ public class DlgStatistics extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblBranchesPW, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblBranches, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblStalls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblForwards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblCPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,7 +157,9 @@ public class DlgStatistics extends javax.swing.JDialog {
                     .addComponent(lblExecutedInstructionsVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(lblCPIVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(lblForwardsVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(lblStallsVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addComponent(lblStallsVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(lblBranchesVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(lblBranchesPWVal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,6 +197,14 @@ public class DlgStatistics extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStalls)
                     .addComponent(lblStallsVal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBranches)
+                    .addComponent(lblBranchesVal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBranchesPW)
+                    .addComponent(lblBranchesPWVal))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,6 +252,8 @@ public class DlgStatistics extends javax.swing.JDialog {
 		lblCPI.setText(Lang.t("cpi") + ":");
 		lblForwards.setText(Lang.t("forwards") + ":");
 		lblStalls.setText(Lang.t("stalls") + ":");
+		lblBranches.setText(Lang.t("branches") + ":");
+		lblBranchesPW.setText(Lang.t("branches predicted wrong") + ":");
 	}
 	
 	/**
@@ -241,6 +269,8 @@ public class DlgStatistics extends javax.swing.JDialog {
 		lblCPIVal.setText(cpu.getCPIAsString());
 		lblForwardsVal.setText(cpu.getNumberOfForwards() + "");
 		lblStallsVal.setText(cpu.getNumberOfStalls() + "");
+		lblBranchesVal.setText(cpu.getNumberOfBranches() + "");
+		lblBranchesPWVal.setText(cpu.getNumberOfBranchesPredictedWrong() + "");
 	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -263,5 +293,9 @@ public class DlgStatistics extends javax.swing.JDialog {
     private javax.swing.JLabel lblForwardsVal;
     private javax.swing.JLabel lblStalls;
     private javax.swing.JLabel lblStallsVal;
+    private javax.swing.JLabel lblBranches;
+    private javax.swing.JLabel lblBranchesVal;
+    private javax.swing.JLabel lblBranchesPW;
+    private javax.swing.JLabel lblBranchesPWVal;
     // End of variables declaration//GEN-END:variables
 }
